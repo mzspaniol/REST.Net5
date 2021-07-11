@@ -4,15 +4,15 @@ using Rest.net5.Model.Context;
 using System.Linq;
 using System;
 
-namespace Rest.net5.Services.Implementations
+namespace Rest.net5.Repository.Implementations
 {
-    public class PersonServiceImplementation : IPersonService
+    public class PersonRepositoryImplementation : IPersonRepository
     {
 
 
         private MySQLContext _context;
 
-        public PersonServiceImplementation(MySQLContext context)
+        public PersonRepositoryImplementation(MySQLContext context)
         {
             _context = context;
         }
@@ -83,7 +83,7 @@ namespace Rest.net5.Services.Implementations
 
         }
 
-        private bool Exists(long id)
+        public bool Exists(long id)
         {
             return _context.Persons.Any((p => p.Id.Equals(id)));
         }

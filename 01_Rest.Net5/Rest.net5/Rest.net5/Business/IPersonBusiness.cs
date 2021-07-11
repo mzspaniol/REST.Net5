@@ -1,9 +1,9 @@
 ﻿using Rest.net5.Controllers.Model;
 using System.Collections.Generic;
 
-namespace Rest.net5.Services.Implementations
+namespace Rest.net5.Business.Implementations
 {
-    public interface IPersonService
+    public interface IPersonBusiness
     {
         Person Create(Person person);
         Person FindByID(long id);
