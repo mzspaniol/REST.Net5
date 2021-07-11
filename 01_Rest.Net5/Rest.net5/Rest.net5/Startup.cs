@@ -11,6 +11,7 @@ using Serilog;
 using MySqlConnector;
 using System;
 using System.Collections.Generic;
+using Rest.net5.Repository.Generic;
 
 namespace Rest.net5
 {
@@ -53,9 +54,8 @@ namespace Rest.net5
             services.AddApiVersioning();
             // Dependency Injection
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IPersonRepository, PersonRepositoryImplementation>();
             services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
-            services.AddScoped<IBooksRepository, BooksRepositoryImplementation>();
+            services.AddScoped(typeof(IRepository<>), (typeof(GenericRepository<>)));
 
         }
 

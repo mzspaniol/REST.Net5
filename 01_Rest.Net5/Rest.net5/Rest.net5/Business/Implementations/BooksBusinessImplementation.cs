@@ -11,9 +11,9 @@ namespace Rest.net5.Business.Implementations
     {
 
 
-        private readonly IBooksRepository _repository;
+        private readonly IRepository<Books> _repository;
 
-        public BooksBusinessImplementation(IBooksRepository repository)
+        public BooksBusinessImplementation(IRepository<Books> repository)
         {
             _repository = repository;
         }
