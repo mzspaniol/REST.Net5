@@ -41,7 +41,7 @@ namespace Rest.net5.Services.Implementations
                 Id = IncrementAndGet(),
                 FirstName = "NamePerson" + i,
                 LastName = "LastNamePerson" + i,
-                Adress = "Adress" + i,
+                Address = "Adress" + i,
                 Gender = "Masculino" + i
             };
         }
@@ -59,7 +59,7 @@ namespace Rest.net5.Services.Implementations
                 Id = IncrementAndGet(),
                 FirstName = "Matheus",
                 LastName = "Spaniol",
-                Adress = "pernambuco",
+                Address = "pernambuco",
                 Gender = "Masculino"
             };
         }
