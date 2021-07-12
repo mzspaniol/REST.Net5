@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Rest.net5.Data.VO;
 using Rest.net5.Model.Base;
 using Rest.net5.Model.Context;
 using Rest.net5.Repository.Implementations;
@@ -32,6 +33,11 @@ namespace Rest.net5.Repository.Generic
                 throw;
             }
 
+        }
+
+        public PersonVO Create(PersonVO personVO)
+        {
+            throw new NotImplementedException();
         }
 
         public void Delete(long id)

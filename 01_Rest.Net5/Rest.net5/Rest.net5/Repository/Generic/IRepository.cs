@@ -1,4 +1,5 @@
 ﻿using Rest.net5.Controllers.Model;
+using Rest.net5.Data.VO;
 using Rest.net5.Model.Base;
 using System.Collections.Generic;
 
@@ -12,7 +13,7 @@ namespace Rest.net5.Repository.Implementations
         T Update(T item);
         void Delete(long id);
         bool Exists(long id);
-
+        PersonVO Create(PersonVO personVO);
     }
 }
 
