@@ -1,9 +1,12 @@
-﻿using Rest.net5.Model.Base;
+﻿
+using Rest.net5.Model.Base;
+using System.Text.Json.Serialization;
 
 namespace Rest.net5.Data.VO
 {
     public class PersonVO
     {
+        [JsonPropertyName("Id")]
         public long Id { get; set; }
 
         public string FirstName { get; set; }
