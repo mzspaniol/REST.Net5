@@ -8,10 +8,11 @@ using Rest.net5.Model.Context;
 using Rest.net5.Business.Implementations;
 using Rest.net5.Repository.Implementations;
 using Serilog;
-using MySqlConnector;
 using System;
 using System.Collections.Generic;
 using Rest.net5.Repository.Generic;
+using System.Net.Http.Headers;
+using System.Net.Http.Json;
 
 namespace Rest.net5
 {
@@ -50,6 +51,16 @@ namespace Rest.net5
 
             // .net >= 5
             services.AddDbContext<MySQLContext>(options => options.UseMySql(connection, ServerVersion.AutoDetect(connection)));
+
+            /* json to xml
+            services.AddMvc(options =>
+            {
+                options.RespectBrowserAcceptHeader = true;
+                options.FormatterMappings.SetMediaTypeMappingForFormat("xml", MediaTypeHeaderValue.Parse("application/xml"));
+                options.FormatterMappings.SetMediaTypeMappingForFormat("json", MediaTypeHeaderValue.Parse("application/json");
+            })
+                .AddXmlSerializerFormatters();
+            */
 
             services.AddApiVersioning();
             // Dependency Injection
