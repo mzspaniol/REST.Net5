@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using Rest.net5.Repository.Generic;
 using System.Net.Http.Headers;
 using System.Net.Http.Json;
+using Rest.net5.Hypermedia.Filters;
+using Rest.net5.Hypermedia.Enricher;
 
 namespace Rest.net5
 {
@@ -62,6 +64,10 @@ namespace Rest.net5
                 .AddXmlSerializerFormatters();
             */
 
+            var filterOptions = new HyperMediaFilterOptions();
+            filterOptions.ContentResponseEnricherList.Add(new PersonEnricher());
+
+            services.AddSingleton(filterOptions);
             services.AddApiVersioning();
             // Dependency Injection
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
@@ -107,6 +113,7 @@ namespace Rest.net5
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapControllers();
+                endpoints.MapControllerRoute("DefaultApi", "{controller=values}/{id?}");
             });
         }
     }
