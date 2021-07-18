@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Rest.net5.Business.Implementations;
 using Rest.net5.Data.VO;
@@ -9,6 +10,7 @@ namespace Rest.net5.Controllers
 {
     [ApiVersion("1")]
     [ApiController]
+    [Authorize("Bearer")]
     [Route("api/[controller]/v{version:apiVersion}")]
 
     public class PersonController : ControllerBase
