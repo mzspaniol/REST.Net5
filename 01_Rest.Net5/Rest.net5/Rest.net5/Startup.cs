@@ -40,7 +40,14 @@ namespace Rest.net5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-      
+            //CORS
+            services.AddCors(options => options.AddDefaultPolicy(builder => 
+            {
+                builder.AllowAnyOrigin()
+                .AllowAnyMethod()
+                .AllowAnyHeader();
+            }));
+
             services.AddControllers();
             //var connection = Configuration.GetConnectionString("MySQLConnection:MySQLConnectionString");
             var connection = Configuration["MySQLConnection:MySQLConnectionString"];
@@ -123,7 +130,10 @@ namespace Rest.net5
             app.UseHttpsRedirection();
 
             app.UseRouting();
-            
+
+            //Cors tem que ficar dps do UseHttpsRedirection e UseRouting, mas antes do UseEndpoints
+            app.UseCors();
+
             //Swagger documentation
             app.UseSwagger();
             app.UseSwaggerUI(c => {
