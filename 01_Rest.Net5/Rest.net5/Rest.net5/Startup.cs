@@ -17,6 +17,16 @@ using Rest.net5.Hypermedia.Filters;
 using Rest.net5.Hypermedia.Enricher;
 using Microsoft.OpenApi.Models;
 using Microsoft.AspNetCore.Rewrite;
+using Rest.net5.Services;
+using Rest.net5.Services.Implementations;
+using Rest.net5.Business;
+using Rest.net5.Repository;
+using Rest.net5.Configurations;
+using Microsoft.Extensions.Options;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Rest.net5
 {
@@ -40,6 +50,38 @@ namespace Rest.net5
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            var tokenConfigurations = new TokenConfiguration();
+            new ConfigureFromConfigurationOptions<TokenConfiguration>(
+                Configuration.GetSection("TokenConfiguration")
+                ).Configure(tokenConfigurations);
+
+            services.AddSingleton(tokenConfigurations);
+            services.AddAuthentication(options =>
+            {
+                options.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                options.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+                .AddJwtBearer(options =>
+                {
+                    options.TokenValidationParameters = new TokenValidationParameters
+                    {
+                        ValidateIssuer = true,
+                        ValidateAudience = true,
+                        ValidateLifetime = true,
+                        ValidateIssuerSigningKey = true,
+                        ValidIssuer = tokenConfigurations.Issuer,
+                        ValidAudience = tokenConfigurations.Audience,
+                        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(tokenConfigurations.Secret))
+                    };
+                });
+
+            services.AddAuthorization(auth =>
+            {
+            auth.AddPolicy("Bearer", new AuthorizationPolicyBuilder()
+                .AddAuthenticationSchemes(JwtBearerDefaults.AuthenticationScheme)
+                .RequireAuthenticatedUser().Build());
+            });
+
             //CORS
             services.AddCors(options => options.AddDefaultPolicy(builder => 
             {
@@ -95,7 +137,12 @@ namespace Rest.net5
             // Dependency Injection
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
+            services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
+            services.AddTransient<ITokenService, TokenService>();
+
             services.AddScoped(typeof(IRepository<>), (typeof(GenericRepository<>)));
+            services.AddScoped<IUserRepository, UserRepository>();
+            
 
         }
 
@@ -130,6 +177,8 @@ namespace Rest.net5
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+           
 
             //Cors tem que ficar dps do UseHttpsRedirection e UseRouting, mas antes do UseEndpoints
             app.UseCors();
