@@ -47,6 +47,11 @@ namespace Rest.net5.Business.Implementations
             return _converter.Parse(_repository.FindByID(id));
         }
 
+        public List<PersonVO> FindByName(string firstName, string lastName)
+        {
+            return _converter.Parse(_repository.FindByName(firstName, lastName));
+        }
+
         public PersonVO Update(PersonVO person)
         {
             var personEntity = _converter.Parse(person);
