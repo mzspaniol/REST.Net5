@@ -140,8 +140,9 @@ namespace Rest.net5
             services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
             services.AddTransient<ITokenService, TokenService>();
 
-            services.AddScoped(typeof(IRepository<>), (typeof(GenericRepository<>)));
+            services.AddScoped(typeof(IPersonRepository<>), (typeof(GenericRepository<>)));
             services.AddScoped<IUserRepository, UserRepository>();
+            services.AddScoped<IPersonRepository, PersonRepository>();
             
 
         }

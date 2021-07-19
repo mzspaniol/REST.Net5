@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Rest.net5.Repository.Implementations
 {
-    public interface IRepository<T> where T: BaseEntity
+    public interface IPersonRepository<T> where T: BaseEntity
     {
         T Create(T item);
         T FindByID(long id);

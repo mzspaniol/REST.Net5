@@ -1,8 +1,7 @@
-﻿using Rest.net5.Controllers.Model;
-using System.Collections.Generic;
-using Rest.net5.Repository.Implementations;
+﻿using System.Collections.Generic;
 using Rest.net5.Data.VO;
 using Rest.net5.Data.Converter.Implementation;
+using Rest.net5.Repository.Generic;
 
 namespace Rest.net5.Business.Implementations
 {
@@ -10,11 +9,11 @@ namespace Rest.net5.Business.Implementations
     {
 
 
-        private readonly IRepository<Person> _repository;
+        private readonly IPersonRepository _repository;
 
         private readonly PersonConverter _converter;
 
-        public PersonBusinessImplementation(IRepository<Person> repository)
+        public PersonBusinessImplementation(IPersonRepository repository)
         {
             _repository = repository;
             _converter = new PersonConverter();
@@ -30,6 +29,12 @@ namespace Rest.net5.Business.Implementations
         public void Delete(long id)
         {
             _repository.Delete(id);
+        }
+
+        public PersonVO Disable(long id)
+        {
+            var personEntity = _repository.Disable(id);
+            return _converter.Parse(personEntity);
         }
 
         public List<PersonVO> FindAll()
