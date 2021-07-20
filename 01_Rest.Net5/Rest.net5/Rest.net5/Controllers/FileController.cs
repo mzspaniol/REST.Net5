@@ -32,6 +32,16 @@ namespace Rest.net5.Controllers
         {
             FileDetailVO detail = await _fileBusiness.SaveFileToDisk(file);
             return new OkObjectResult(detail);
+        }  
+        [HttpPost("uploadMultipleFiles")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType((200), Type = typeof(List<FileDetailVO>))]
+        [Produces("application/json")]
+        public async Task<IActionResult> UploadManyFile([FromForm] List<IFormFile> files)
+        {
+            List<FileDetailVO> details = await _fileBusiness.SaveFilesToDisk(files);
+            return new OkObjectResult(details);
         }
 
     }
