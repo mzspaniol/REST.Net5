@@ -5,6 +5,7 @@ using Rest.net5.Business;
 using Rest.net5.Data.VO;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -44,5 +45,22 @@ namespace Rest.net5.Controllers
             return new OkObjectResult(details);
         }
 
+        [HttpGet("downloadFile/{fileName}")]
+        [ProducesResponseType(400)]
+        [ProducesResponseType(401)]
+        [ProducesResponseType(204)]
+        [ProducesResponseType((200), Type = typeof(byte[]))]
+        [Produces("application/octet-stream")]
+        public async Task<IActionResult> GetFileAsync(string fileName)
+        {
+            byte[] buffer = _fileBusiness.GetFile(fileName);
+            if (buffer != null)
+            {
+                HttpContext.Response.ContentType = $"application/{Path.GetExtension(fileName).Replace(".", "")}";
+                HttpContext.Response.Headers.Add("content-length", buffer.Length.ToString());
+                await HttpContext.Response.Body.WriteAsync(buffer, 0, buffer.Length);
+            }
+            return new ContentResult();
+        }
     }
 }
