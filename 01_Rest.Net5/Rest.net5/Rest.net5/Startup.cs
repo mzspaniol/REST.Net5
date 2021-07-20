@@ -27,6 +27,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.AspNetCore.Mvc.Infrastructure;
 
 namespace Rest.net5
 {
@@ -135,17 +137,19 @@ namespace Rest.net5
                     });
             });
             // Dependency Injection
+            services.AddHttpContextAccessor();
+
+            services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
+
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
-            services.AddScoped(typeof(IRepository<>), (typeof(GenericRepository<>)));
-
-
             services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
-            services.AddTransient<ITokenService, TokenService>();
+            services.AddScoped<IFileBusiness, FileBusinessImplementation>();
+            services.AddScoped(typeof(IRepository<>), (typeof(GenericRepository<>)));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
-            
 
+            services.AddTransient<ITokenService, TokenService>();    
         }
 
         private void MigrateDataBase(string connection)
