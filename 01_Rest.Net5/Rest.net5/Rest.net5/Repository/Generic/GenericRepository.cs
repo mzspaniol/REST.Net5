@@ -9,7 +9,7 @@ using System.Linq;
 
 namespace Rest.net5.Repository.Generic
 {
-    public class GenericRepository<T> : IPersonRepository<T> where T : BaseEntity
+    public class GenericRepository<T> : IRepository<T> where T : BaseEntity
     {
         protected MySQLContext _context;
 
@@ -33,11 +33,6 @@ namespace Rest.net5.Repository.Generic
                 throw;
             }
 
-        }
-
-        public PersonVO Create(PersonVO personVO)
-        {
-            throw new NotImplementedException();
         }
 
         public void Delete(long id)
@@ -70,6 +65,26 @@ namespace Rest.net5.Repository.Generic
         public T FindByID(long id)
         {
             return dataset.SingleOrDefault(p => p.Id.Equals(id));
+        }
+
+        public List<T> FindWithPagedSearch(string query)
+        {
+            return dataset.FromSqlRaw<T>(query).ToList();
+        }
+
+        public int GetCount(string query)
+        {
+            var result = "";
+            using (var connection = _context.Database.GetDbConnection())
+            {
+                connection.Open();
+                using (var command = connection.CreateCommand())
+                {
+                    command.CommandText = query;
+                    result = command.ExecuteScalar().ToString();
+                }
+            };
+            return int.Parse(result);
         }
 
         public T Update(T item)

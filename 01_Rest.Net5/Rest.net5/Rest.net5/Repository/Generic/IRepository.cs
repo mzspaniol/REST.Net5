@@ -5,7 +5,7 @@ using System.Collections.Generic;
 
 namespace Rest.net5.Repository.Implementations
 {
-    public interface IPersonRepository<T> where T: BaseEntity
+    public interface IRepository<T> where T: BaseEntity
     {
         T Create(T item);
         T FindByID(long id);
@@ -13,7 +13,8 @@ namespace Rest.net5.Repository.Implementations
         T Update(T item);
         void Delete(long id);
         bool Exists(long id);
-        PersonVO Create(PersonVO personVO);
+        List<T> FindWithPagedSearch(string query);
+        int GetCount(string query);
     }
 }
 

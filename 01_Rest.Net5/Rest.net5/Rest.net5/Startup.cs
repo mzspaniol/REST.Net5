@@ -137,10 +137,11 @@ namespace Rest.net5
             // Dependency Injection
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
             services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
+            services.AddScoped(typeof(IRepository<>), (typeof(GenericRepository<>)));
+
+
             services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
             services.AddTransient<ITokenService, TokenService>();
-
-            services.AddScoped(typeof(IPersonRepository<>), (typeof(GenericRepository<>)));
             services.AddScoped<IUserRepository, UserRepository>();
             services.AddScoped<IPersonRepository, PersonRepository>();
             

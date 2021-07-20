@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Rest.net5.Repository.Generic
 {
-    public interface IPersonRepository : IPersonRepository<Person> 
+    public interface IPersonRepository : IRepository<Person> 
     { 
         Person Disable(long id);
 
