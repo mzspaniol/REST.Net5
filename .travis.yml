@@ -20,5 +20,5 @@ deploy:
     docker push $DOCKER_USARNAME/rest.net5-db:$TRAVIS_JOB_ID;
   on:
     branch: main
- notifications:
-   email: false
+notifications:
+  email: false
