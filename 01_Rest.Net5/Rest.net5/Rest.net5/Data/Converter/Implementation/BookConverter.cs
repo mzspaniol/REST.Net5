@@ -1,46 +1,46 @@
-﻿using Rest.net5.Controllers.Model;
-using Rest.net5.Data.Converter.Contract;
+﻿using Rest.net5.Data.Converter.Contract;
 using Rest.net5.Data.VO;
+using Rest.net5.Model;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Rest.net5.Data.Converter.Implementation
+namespace Rest.net5.Data.Converter.Implementations
 {
-    public class BooksConverter : IParser<BooksVO, Books>, IParser<Books, BooksVO>
+    public class BookConverter : IParser<BookVO, Book>, IParser<Book, BookVO>
     {
-        public Books Parse(BooksVO origin)
+        public Book Parse(BookVO origin)
         {
             if (origin == null) return null;
-            return new Books
+            return new Book
             {
                 Id = origin.Id,
                 Author = origin.Author,
-                Launch_date = origin.Launch_date,
+                LaunchDate = origin.LaunchDate,
                 Price = origin.Price,
                 Title = origin.Title
             };
         }
 
-        public List<Books> Parse(List<BooksVO> origin)
+        public BookVO Parse(Book origin)
+        {
+            if (origin == null) return null;
+            return new BookVO
+            {
+                Id = origin.Id,
+                Author = origin.Author,
+                LaunchDate = origin.LaunchDate,
+                Price = origin.Price,
+                Title = origin.Title
+            };
+        }
+
+        public List<Book> Parse(List<BookVO> origin)
         {
             if (origin == null) return null;
             return origin.Select(item => Parse(item)).ToList();
         }
 
-        public BooksVO Parse(Books origin)
-        {
-            if (origin == null) return null;
-            return new BooksVO
-            {
-                Id = origin.Id,
-                Author = origin.Author,
-                Launch_date = origin.Launch_date,
-                Price = origin.Price,
-                Title = origin.Title
-            };
-        }
-
-        public List<BooksVO> Parse(List<Books> origin)
+        public List<BookVO> Parse(List<Book> origin)
         {
             if (origin == null) return null;
             return origin.Select(item => Parse(item)).ToList();

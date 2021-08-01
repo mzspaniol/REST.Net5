@@ -142,7 +142,7 @@ namespace Rest.net5
             services.TryAddSingleton<IActionContextAccessor, ActionContextAccessor>();
 
             services.AddScoped<IPersonBusiness, PersonBusinessImplementation>();
-            services.AddScoped<IBooksBusiness, BooksBusinessImplementation>();
+            services.AddScoped<IBookBusiness, BookBusinessImplementation>();
             services.AddScoped<ILoginBusiness, LoginBusinessImplementation>();
             services.AddScoped<IFileBusiness, FileBusinessImplementation>();
             services.AddScoped(typeof(IRepository<>), (typeof(GenericRepository<>)));
