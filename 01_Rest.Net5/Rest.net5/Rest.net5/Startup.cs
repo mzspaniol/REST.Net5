@@ -192,7 +192,7 @@ namespace Rest.net5
             //Swagger documentation
             app.UseSwagger();
             app.UseSwaggerUI(c => {
-                c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST API's From 0 to Azure with ASP.NET CORE 5 and Docker - V1");
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "REST API's From 0 to Azure with ASP.NET CORE 5 and Docker - Foo Bar");
             });
             var option = new RewriteOptions();
             option.AddRedirect("^$", "swagger");
